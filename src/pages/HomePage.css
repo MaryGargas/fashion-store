@@ -1,0 +1,41 @@
+.home-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+  text-align: center;
+  color: #333;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.home-container h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.home-container p {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+  max-width: 500px;
+  line-height: 1.4;
+}
+
+.shop-btn {
+  background-color: #ff6f91;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(255, 111, 145, 0.4);
+  transition: background-color 0.3s ease;
+}
+
+.shop-btn:hover {
+  background-color: #ff4a70;
+}
