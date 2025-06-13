@@ -8,6 +8,7 @@ import CartPage from "./pages/CartPage";
 import ConfirmOrder from "./pages/ConfirmOrder";
 import ThankYouPage from "./pages/ThankYouPage";
 import Header from "./components/Header";
+import LoginSignup from "./Auth/LoginSignup"; // ✅ أضفناها
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -68,6 +69,7 @@ function App() {
           }
         />
         <Route path="/thankyou" element={<ThankYouPage />} />
+        <Route path="/auth" element={<LoginSignup />} /> {/* ✅ صفحة اللوجين */}
       </Routes>
     </BrowserRouter>
   );
