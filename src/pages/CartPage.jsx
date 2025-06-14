@@ -1,64 +1,77 @@
+// src/pages/CartPage.jsx
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./CartPage.css";
 
-function CartPage({ cartItems, removeFromCart }) {
-  const navigate = useNavigate();
+const CartPage = ({ cartItems, removeFromCart, updateQuantity }) => {
+  // ✅ حساب التوتال بدون NaN
+  const totalPrice = cartItems.reduce((total, item) => {
+    const price = parseFloat(item.price) || 0;
+    const quantity = parseInt(item.quantity) || 1;
+
+    // 🧪 للتجربة - تقدري تشيليهم بعدين
+    console.log("🔍 السعر:", item.price, "⇨", price);
+    console.log("🧮 الكمية:", item.quantity, "⇨", quantity);
+
+    return total + price * quantity;
+  }, 0);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Your Cart</h2>
+    <div className="cart-container">
+      <h2 className="cart-title">🛒 Your Cart</h2>
+
       {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p className="empty-cart">Your cart is empty 😢</p>
       ) : (
         <div>
           {cartItems.map((item, index) => (
-            <div
-              key={item.id}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "10px",
-                borderBottom: "1px solid #ccc",
-                paddingBottom: "10px",
-              }}
-            >
-              <div>
-                <p>{item.name}</p>
-                <p>Quantity: {item.quantity}</p>
+            <div key={index} className="cart-item">
+              <div className="item-info">
+                <div className="item-name">{item.name}</div>
+                <div className="item-price">
+                  ${parseFloat(item.price).toFixed(2)}
+                </div>
               </div>
+
+              <div className="item-quantity">
+                <button
+                  className="quantity-btn"
+                  onClick={() => updateQuantity(index, item.quantity - 1)}
+                  disabled={item.quantity <= 1}
+                >
+                  -
+                </button>
+                <span>{item.quantity}</span>
+                <button
+                  className="quantity-btn"
+                  onClick={() => updateQuantity(index, item.quantity + 1)}
+                >
+                  +
+                </button>
+              </div>
+
               <button
+                className="remove-btn"
                 onClick={() => removeFromCart(index)}
-                style={{
-                  backgroundColor: "red",
-                  color: "white",
-                  border: "none",
-                  padding: "5px 10px",
-                  cursor: "pointer",
-                }}
               >
                 Remove
               </button>
             </div>
           ))}
 
-          <button
-            onClick={() => navigate("/confirmorder")}
-            style={{
-              marginTop: "20px",
-              backgroundColor: "pink",
-              color: "white",
-              border: "none",
-              padding: "10px 20px",
-              fontSize: "16px",
-              cursor: "pointer",
-            }}
-          >
-            Confirm Order
-          </button>
+          <div className="cart-total">
+            <strong>Total:</strong> ${totalPrice.toFixed(2)}
+          </div>
+
+          <div className="checkout-container" style={{ textAlign: "right", marginTop: "20px" }}>
+            <Link to="/confirmorder" className="quantity-btn">
+              Proceed to Checkout
+            </Link>
+          </div>
         </div>
       )}
     </div>
   );
-}
+};
 
 export default CartPage;

@@ -1,10 +1,8 @@
-// src/firebase/firebaseConfig.js
-
+// src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// ✅ بيانات مشروعك من Firebase Console
 const firebaseConfig = {
   apiKey: "AIzaSyAmGwB27mXISQTiaMa8XxLMPtpKTw1Xb84",
   authDomain: "fashion-brand-d6870.firebaseapp.com",
@@ -12,12 +10,10 @@ const firebaseConfig = {
   storageBucket: "fashion-brand-d6870.appspot.com",
   messagingSenderId: "302662472305",
   appId: "1:302662472305:web:5fcaee36f5b75d7cef41d0",
-  measurementId: "G-TMLTQ6SJY4",
+  measurementId: "G-TMLTQ6SJY4"
 };
 
-// ✅ تهيئة الفايربيز
 const app = initializeApp(firebaseConfig);
 
-// ✅ التصدير للاستخدام في باقي الملفات
 export const auth = getAuth(app);
 export const db = getFirestore(app);

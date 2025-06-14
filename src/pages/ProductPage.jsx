@@ -1,3 +1,4 @@
+// src/pages/ProductPage.jsx
 import React from "react";
 import { useParams } from "react-router-dom";
 import "./ProductPage.css";
@@ -47,6 +48,20 @@ const ProductPage = ({ addToCart }) => {
 
   if (!product) return <h2>Product Not Found</h2>;
 
+  // نحول السعر من "$25" إلى 25
+  const numericPrice = parseFloat(product.price.replace("$", ""));
+
+  // نبعت منتج منسق فيه كل الداتا اللي محتاجينها
+  const handleAddToCart = () => {
+    const formattedProduct = {
+      id,
+      name: product.name,
+      price: numericPrice,
+      image: product.image,
+    };
+    addToCart(formattedProduct);
+  };
+
   return (
     <div className="product-page">
       <div className="product-container">
@@ -55,7 +70,7 @@ const ProductPage = ({ addToCart }) => {
           <h2 className="product-name">{product.name}</h2>
           <p className="product-description">{product.description}</p>
           <p className="product-price">{product.price}</p>
-          <button className="add-btn" onClick={() => addToCart(product)}>
+          <button className="add-btn" onClick={handleAddToCart}>
             Add to Cart 🛒
           </button>
         </div>

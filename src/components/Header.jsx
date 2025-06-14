@@ -1,24 +1,38 @@
-// components/Header.jsx
+// src/components/Header.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
-const Header = ({ cartCount }) => {
+const Header = ({ user, cartCount }) => {
+  const auth = getAuth();
+
+  const handleLogout = () => {
+    signOut(auth).catch((error) => {
+      console.error("Logout error:", error);
+    });
+  };
+
   return (
-    <header className="bg-white shadow p-4 flex justify-between items-center">
-      <div className="text-xl font-bold">
-        <Link to="/">🛍 FashionBrand</Link>
+    <header className="header">
+      <div>
+        <Link to="/">Fashion Brand</Link>
       </div>
-      <nav className="flex gap-6 text-md font-medium">
+
+      <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
         <Link to="/shop">Shop</Link>
-        <Link to="/cart">
-          🛒 Cart
-          {cartCount > 0 && (
-            <span className="ml-1 bg-pink-500 text-white rounded-full px-2 py-0.5 text-sm">
-              {cartCount}
-            </span>
-          )}
-        </Link>
-      </nav>
+        <Link to="/cart">Cart ({cartCount})</Link>
+
+        {user ? (
+          <>
+            <Link to="/myorders" className="nav-link">My Orders</Link>
+            <Link to="/account">My Account</Link>
+            <span style={{ fontWeight: "bold" }}>👤 {user.email}</span>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <Link to="/auth">Login / Signup</Link>
+        )}
+      </div>
     </header>
   );
 };

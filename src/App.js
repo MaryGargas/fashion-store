@@ -1,25 +1,43 @@
-import React, { useState } from "react";
+// src/App.js
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase"; // نستخدم auth من الملف نفسه
+import "./firebase";
 
+// الصفحات
 import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 import ConfirmOrder from "./pages/ConfirmOrder";
 import ThankYouPage from "./pages/ThankYouPage";
+import LoginSignup from "./Auth/LoginSignup";
+import MyAccount from "./pages/MyAccount";
+import MyOrders from "./pages/MyOrders";
+
+// المكونات
 import Header from "./components/Header";
-import LoginSignup from "./Auth/LoginSignup"; // ✅ أضفناها
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const [user, setUser] = useState(null);
 
-  // إضافة للسلة
+  // متابعة حالة تسجيل الدخول
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // ✅ إضافة منتج للسلة
   const addToCart = (product) => {
     setCartItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+      const existing = prev.find((item) => item.name === product.name);
       if (existing) {
         return prev.map((item) =>
-          item.id === product.id
+          item.name === product.name
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -29,20 +47,29 @@ function App() {
     });
   };
 
-  // إزالة من السلة
+  // ✅ إزالة منتج من السلة
   const removeFromCart = (indexToRemove) => {
-    setCartItems((prevCart) => prevCart.filter((_, i) => i !== indexToRemove));
+    setCartItems((prevCart) =>
+      prevCart.filter((_, i) => i !== indexToRemove)
+    );
   };
 
-  // تفريغ السلة بعد تأكيد الطلب
-  const clearCart = () => {
-    setCartItems([]);
+  // ✅ تعديل الكمية بدون ما نمسح السعر
+  const updateQuantity = (index, newQty) => {
+    if (newQty < 1) return;
+    setCartItems((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, quantity: newQty } : item
+      )
+    );
   };
+
+  // ✅ تفريغ السلة
+  const clearCart = () => setCartItems([]);
 
   return (
     <BrowserRouter>
-      <Header cartCount={cartItems.length} />
-
+      <Header user={user} cartCount={cartItems.length} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/shop" element={<CategoryPage />} />
@@ -56,20 +83,21 @@ function App() {
             <CartPage
               cartItems={cartItems}
               removeFromCart={removeFromCart}
+              updateQuantity={updateQuantity}
             />
           }
         />
         <Route
           path="/confirmorder"
           element={
-            <ConfirmOrder
-              cartItems={cartItems}
-              clearCart={clearCart}
-            />
+            <ConfirmOrder cartItems={cartItems} clearCart={clearCart} />
           }
         />
         <Route path="/thankyou" element={<ThankYouPage />} />
-        <Route path="/auth" element={<LoginSignup />} /> {/* ✅ صفحة اللوجين */}
+        <Route path="/auth" element={<LoginSignup />} />
+        <Route path="/login" element={<LoginSignup />} />
+        <Route path="/account" element={<MyAccount user={user} />} />
+        <Route path="/myorders" element={<MyOrders />} />
       </Routes>
     </BrowserRouter>
   );
