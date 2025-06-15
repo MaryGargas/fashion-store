@@ -1,31 +1,27 @@
 .account-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  background: #f4f4f4;
-  padding: 40px 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 3rem 2.5rem;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.account-container h2 {
-  font-size: 1.5rem;
+.account-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.account-info {
+  font-size: 1.1rem;
+  line-height: 1.8;
   color: #333;
-}
-
-.account-container button {
-  padding: 12px 24px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  background-color: black;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.account-container button:hover {
-  background-color: #333;
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
