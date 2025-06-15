@@ -5,6 +5,7 @@ import "./Checkout.css";
 
 const CheckoutPage = ({ cartItems }) => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -15,17 +16,17 @@ const CheckoutPage = ({ cartItems }) => {
     phone: "",
   });
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-  };
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // ✅ ننتقل إلى صفحة ReviewOrder بدل ConfirmOrder
+    // ✅ نروح لـ صفحة المراجعة ومعانا البيانات
     navigate("/review", {
       state: {
         shippingInfo: formData,

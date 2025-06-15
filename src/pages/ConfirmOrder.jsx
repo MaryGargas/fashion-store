@@ -1,43 +1,143 @@
 // src/pages/ConfirmOrder.jsx
-import React from "react";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
-import "./ConfirmOrder.css"; // لو فيه ستايل خارجي
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import "./ConfirmOrder.css";
 
-const ConfirmOrder = ({ cartItems, clearCart }) => {
+const ConfirmOrder = ({ clearCart }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleConfirmOrder = async () => {
-    const user = auth.currentUser;
+  const cartItems = location.state?.cartItems || [];
 
-    if (!user) {
-      alert("Please login to confirm your order.");
-      return;
-    }
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    postalCode: "",
+    province: "",
+    phone: "",
+  });
 
-    try {
-      await addDoc(collection(db, "orders"), {
-        userId: user.uid,
-        items: cartItems,
-        createdAt: Timestamp.now(),
-      });
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-      clearCart(); // 🧹 نفضي السلة بعد الحفظ
-      navigate("/thankyou"); // 🚀 نروح لصفحة الشكر
-    } catch (error) {
-      console.error("❌ Error confirming order:", error);
-      alert("Something went wrong. Please try again.");
-    }
+  const handleConfirm = (e) => {
+    e.preventDefault();
+
+    // ممكن هنا تبعتي البيانات لـ Firebase أو Email أو غيره
+    console.log("✅ Order confirmed with shipping info:", formData);
+
+    clearCart();
+    navigate("/thankyou");
   };
 
   return (
-    <div style={{ padding: "30px", textAlign: "center" }}>
-      <h2>🧾 Confirm Your Order</h2>
-      <p>Total items: {cartItems.length}</p>
-      <button onClick={handleConfirmOrder} className="quantity-btn">
-        Confirm Order ✅
-      </button>
+    <div className="confirm-order-page" style={{ padding: "40px" }}>
+      <h2>📦 Confirm Your Order</h2>
+
+      <form onSubmit={handleConfirm} style={{ marginBottom: "30px" }}>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            required
+            onChange={handleChange}
+            style={{ flex: 1 }}
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            required
+            onChange={handleChange}
+            style={{ flex: 1 }}
+          />
+        </div>
+        <input
+          type="text"
+          name="address"
+          placeholder="Street Address"
+          required
+          onChange={handleChange}
+          style={{ width: "100%", marginTop: "10px" }}
+        />
+        <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            required
+            onChange={handleChange}
+            style={{ flex: 1 }}
+          />
+          <input
+            type="text"
+            name="postalCode"
+            placeholder="Postal Code"
+            required
+            onChange={handleChange}
+            style={{ flex: 1 }}
+          />
+        </div>
+        <select
+          name="province"
+          required
+          onChange={handleChange}
+          defaultValue=""
+          style={{ width: "100%", marginTop: "10px" }}
+        >
+          <option value="" disabled>
+            Select Province
+          </option>
+          <option value="Cairo">Cairo</option>
+          <option value="Giza">Giza</option>
+          <option value="Alexandria">Alexandria</option>
+          <option value="Other">Other</option>
+        </select>
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          required
+          onChange={handleChange}
+          style={{ width: "100%", marginTop: "10px" }}
+        />
+        <button
+          type="submit"
+          style={{
+            marginTop: "20px",
+            padding: "10px 25px",
+            backgroundColor: "#000",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Confirm Order 🛍
+        </button>
+      </form>
+
+      <div>
+        <h3>🛒 Items</h3>
+        {cartItems.length === 0 ? (
+          <p>No items found.</p>
+        ) : (
+          <ul>
+            {cartItems.map((item, index) => (
+              <li key={index}>
+                {item.name} - {item.quantity} × ${item.price}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

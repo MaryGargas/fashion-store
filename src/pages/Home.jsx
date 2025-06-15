@@ -8,7 +8,7 @@ const HomePage = () => {
       padding: "50px 20px",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     }}>
-      <h1>Welcome to Fashion Brand! 👗✨</h1>
+      <h1>Welcome to Fashion Brand!</h1>
       <p style={{ fontSize: "18px", margin: "20px 0" }}>
         Find your style with our exclusive collections.
       </p>

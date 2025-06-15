@@ -4,12 +4,10 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 
-// استيراد ملفات الستايل
-import "./styles/reset.css";
-import "./styles/utilities.css";
-import "./styles/App.css";
+// ✅ استيراد الستايل
+import "./styles/elance.css";
 
-// استيراد الصفحات
+// ✅ استيراد الصفحات
 import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
 import ProductPage from "./pages/ProductPage";
@@ -19,15 +17,14 @@ import ThankYouPage from "./pages/ThankYouPage";
 import LoginSignup from "./Auth/LoginSignup";
 import MyAccount from "./pages/MyAccount";
 import MyOrders from "./pages/MyOrders";
-import ConfirmOrder from "./pages/ConfirmOrder"; // ✅ جديد
+import ConfirmOrder from "./pages/ConfirmOrder";
 
-// استيراد الكمبوننت
+// ✅ استيراد الكمبوننت
 import Header from "./components/Header";
 
-// ✅ مكون ReviewOrder اللي بيظهر بدل ConfirmOrder
-const ReviewOrder = ({ cartItems }) => {
+// ✅ ReviewOrder component (اللي كتباه بنفسك ومش هلمسه)
+function ReviewOrderComponent({ cartItems }) {
   const navigate = useNavigate();
-
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -71,8 +68,7 @@ const ReviewOrder = ({ cartItems }) => {
                   height: "100px",
                   objectFit: "cover",
                   borderRadius: "10px",
-                }}
-              />
+                }} />
               <div>
                 <h4>{item.name}</h4>
                 <p>Qty: {item.quantity}</p>
@@ -106,7 +102,7 @@ const ReviewOrder = ({ cartItems }) => {
       </div>
     </div>
   );
-};
+}
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -175,8 +171,14 @@ function App() {
           path="/checkout"
           element={<CheckoutPage cartItems={cartItems} clearCart={clearCart} />}
         />
-        <Route path="/review" element={<ReviewOrder cartItems={cartItems} />} />
-        <Route path="/confirm" element={<ConfirmOrder clearCart={clearCart} />} />
+        
+        {/* ✅ صفحة ReviewOrder المستقلة */}
+        <Route path="/review" element={<ReviewOrderComponent cartItems={cartItems} />} />
+
+        <Route
+          path="/confirmorder"
+          element={<ConfirmOrder clearCart={clearCart} />}
+        />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/auth" element={<LoginSignup />} />
         <Route path="/login" element={<LoginSignup />} />

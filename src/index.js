@@ -3,11 +3,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-// ✅ استدعاء ملفات الستايل
-import './styles/reset.css';
-import './styles/utilities.css';
-import './styles/App.css';
-
+// ✅ استدعاء ملفات الستايل من styles
+import "./styles/elance.css"; // ✅ صح كده
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
