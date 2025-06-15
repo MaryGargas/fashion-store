@@ -1,0 +1,36 @@
+.thankyou-container {
+  text-align: center;
+  padding: 5rem 2rem;
+  max-width: 700px;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.thankyou-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 1.5rem;
+}
+
+.thankyou-message {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 2.5rem;
+}
+
+.back-home-btn {
+  background-color: #000;
+  color: #fff;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-home-btn:hover {
+  background-color: #333;
+}
