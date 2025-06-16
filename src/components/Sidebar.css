@@ -1,0 +1,84 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Sidebar styling */
+.sidebar {
+  background-color: #111;
+  color: #fff;
+  height: 100vh;
+  width: 250px;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.sidebar h2.logo {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #f5c518;
+  font-weight: bold;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin: 20px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.sidebar ul li a:hover {
+  color: #f5c518;
+}
+
+/* Hamburger icon */
+.hamburger {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1100;
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #111;
+}
+
+/* Sidebar hidden on mobile */
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+/* Media query for mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}

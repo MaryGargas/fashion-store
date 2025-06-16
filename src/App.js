@@ -20,7 +20,7 @@ import MyOrders from "./pages/MyOrders";
 import ConfirmOrder from "./pages/ConfirmOrder";
 
 // ✅ استيراد الكمبوننت
-import Header from "./components/Header";
+import Header from "./components/Sidebar";
 
 // ✅ ReviewOrder component (اللي كتباه بنفسك ومش هلمسه)
 function ReviewOrderComponent({ cartItems }) {
@@ -183,7 +183,7 @@ function App() {
         <Route path="/auth" element={<LoginSignup />} />
         <Route path="/login" element={<LoginSignup />} />
         <Route path="/account" element={<MyAccount user={user} />} />
-        <Route path="/myorders" element={<MyOrders />} />
+       <Route path="/orders" element={<MyOrders />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,16 +1,13 @@
+/* HomePage.css */
 .home-container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #ffafbd, #ffc3a0);
-  text-align: center;
-  color: #333;
-  padding: 0 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
+.shop-btn:hover {
+  background-color: #333 !important;
+}
 .home-container h1 {
   font-size: 3rem;
   margin-bottom: 20px;
