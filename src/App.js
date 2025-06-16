@@ -1,13 +1,13 @@
 // src/App.js
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 
-// ✅ استيراد الستايل
+// ✅ CSS
 import "./styles/elance.css";
 
-// ✅ استيراد الصفحات
+// ✅ Pages
 import HomePage from "./pages/HomePage";
 import CategoryPage from "./pages/CategoryPage";
 import ProductPage from "./pages/ProductPage";
@@ -19,10 +19,10 @@ import MyAccount from "./pages/MyAccount";
 import MyOrders from "./pages/MyOrders";
 import ConfirmOrder from "./pages/ConfirmOrder";
 
-// ✅ استيراد الكمبوننت
+// ✅ Components
 import Header from "./components/Sidebar";
 
-// ✅ ReviewOrder component (اللي كتباه بنفسك ومش هلمسه)
+// ✅ ReviewOrder Component
 function ReviewOrderComponent({ cartItems }) {
   const navigate = useNavigate();
   const totalPrice = cartItems.reduce(
@@ -31,19 +31,18 @@ function ReviewOrderComponent({ cartItems }) {
   );
 
   return (
-    <div
-      style={{
-        maxWidth: "800px",
-        margin: "40px auto",
-        padding: "30px",
-        backgroundColor: "#fff",
-        borderRadius: "12px",
-        boxShadow: "0 0 15px rgba(0,0,0,0.1)",
-      }}
-    >
+    <div style={{
+      maxWidth: "800px",
+      margin: "40px auto",
+      padding: "30px",
+      backgroundColor: "#fff",
+      borderRadius: "12px",
+      boxShadow: "0 0 15px rgba(0,0,0,0.1)",
+    }}>
       <h2 style={{ textAlign: "center", marginBottom: "25px" }}>
         📝 Review Your Order
       </h2>
+
       <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
         {cartItems.length === 0 ? (
           <p>Your cart is empty!</p>
@@ -68,7 +67,8 @@ function ReviewOrderComponent({ cartItems }) {
                   height: "100px",
                   objectFit: "cover",
                   borderRadius: "10px",
-                }} />
+                }}
+              />
               <div>
                 <h4>{item.name}</h4>
                 <p>Qty: {item.quantity}</p>
@@ -78,6 +78,7 @@ function ReviewOrderComponent({ cartItems }) {
           ))
         )}
       </div>
+
       <div style={{ textAlign: "center", marginTop: "30px" }}>
         <h3 style={{ fontSize: "24px", marginBottom: "20px" }}>
           Total: ${totalPrice.toFixed(2)}
@@ -115,6 +116,16 @@ function App() {
     return () => unsubscribe();
   }, []);
 
+  // ✅ New: handleLogout function
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   const addToCart = (product) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.name === product.name);
@@ -149,7 +160,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header user={user} cartCount={cartItems.length} />
+      <Header user={user} cartCount={cartItems.length} handleLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/shop" element={<CategoryPage />} />
@@ -171,19 +182,13 @@ function App() {
           path="/checkout"
           element={<CheckoutPage cartItems={cartItems} clearCart={clearCart} />}
         />
-        
-        {/* ✅ صفحة ReviewOrder المستقلة */}
         <Route path="/review" element={<ReviewOrderComponent cartItems={cartItems} />} />
-
-        <Route
-          path="/confirmorder"
-          element={<ConfirmOrder clearCart={clearCart} />}
-        />
+        <Route path="/confirmorder" element={<ConfirmOrder clearCart={clearCart} />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/auth" element={<LoginSignup />} />
         <Route path="/login" element={<LoginSignup />} />
         <Route path="/account" element={<MyAccount user={user} />} />
-       <Route path="/orders" element={<MyOrders />} />
+        <Route path="/orders" element={<MyOrders />} />
       </Routes>
     </BrowserRouter>
   );
