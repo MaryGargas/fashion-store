@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./CategoryPage.css";
+import Navbar from "../components/Navbar";
 
 const CategoryPage = () => {
   const products = [
@@ -13,24 +14,32 @@ const CategoryPage = () => {
   ];
 
   return (
+    <>
+    <Navbar/>
     <div className="category-page">
-      <h2 className="title">Shop All Products 🛍</h2>
-      <div className="product-list">
-        {products.map((product, index) => (
-          <div className="product-card" key={index}>
-            <Link to={`/product/${index}`} className="product-link">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="product-img"
-              />
-              <p className="product-name">{product.name}</p>
-            </Link>
-          </div>
-        ))}
+      <h2 className="title mb-5">Shop All Products 🛍</h2>
+      <div className="container">
+        <div className="row">
+          {products.map((product, index) => (
+            <div className="col-md-4 mb-4" key={index}>
+              <div className="product-card">
+                <Link to={`/product/${index}`} className="product-link">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="product-img img-fluid"
+                  />
+                  <p className="product-name">{product.name}</p>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
+  </>
   );
 };
+
 
 export default CategoryPage;
