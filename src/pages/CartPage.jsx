@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./CartPage.css";
 
+
 const CartPage = ({ cartItems, removeFromCart, updateQuantity }) => {
   // ✅ حساب التوتال بدون NaN
   const totalPrice = cartItems.reduce((total, item) => {
