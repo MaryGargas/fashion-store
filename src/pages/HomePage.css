@@ -1,38 +1,135 @@
-/* HomePage.css */
-.home-container {
+/* ===== الصفحة الرئيسية ===== */
+.home {
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh; /* خليها تاخد طول الصفحة كامل */
+  text-align: center;
+  padding-top: 80px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  margin: 0;
-  padding: 0;
+  height: 100%;
+  backdrop-filter: blur(6px); /* مقدار البلور */
+  background-color: rgba(255, 255, 255, 0.3); /* شفافية خفيفة */
+  z-index: 1;
 }
 
-.shop-btn:hover {
-  background-color: #333 !important;
+/* كل العناصر جوه .home لازم يبانوا فوق البلور */
+.home > *:not(.overlay) {
+  position: relative;
+nav-index: 2;
 }
-.home-container h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-
-.home-container p {
-  font-size: 1.5rem;
-  margin-bottom: 40px;
-  max-width: 500px;
-  line-height: 1.4;
+/* ===== لوجو البراند (اللي فيه كلمة بَصْمَة) ===== */
+.logo {
+  width: 180px; /* خليه واضح بس مش ضخم */
+  height: auto;
+  margin-bottom: 15px;
 }
 
-.shop-btn {
-  background-color: #ff6f91;
+/* ===== السلوغان تحت اللوجو ===== */
+.slogan {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* ===== Search bar تحت السلوغان ===== */
+.search-container {
+  margin: 10px 0 30px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  padding: 10px 15px;
+  width: 250px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #c70000;
   color: white;
   border: none;
-  padding: 15px 40px;
-  font-size: 1.2rem;
-  border-radius: 30px;
+  border-radius: 20px;
   cursor: pointer;
-  box-shadow: 0 8px 15px rgba(255, 111, 145, 0.4);
-  transition: background-color 0.3s ease;
+  transition: 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #e65b8f;
+}
+
+/* ===== زرار Shop Now ===== */
+.shop-btn {
+  display: inline-block;
+  background-color: #ff6ea1;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s ease;
+  margin-top: 20px;
 }
 
 .shop-btn:hover {
-  background-color: #ff4a70;
+  background-color: #e65b8f;
+}
+
+/* ===== Social Icons Section ===== */
+.socials {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.socials a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== Footer ===== */
+.footer {
+  padding: 20px;
+  background-color: #fffcef;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-top: 60px;
+}
+
+.footer-links a {
+  margin: 0 10px;
+  color: #555;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
 }

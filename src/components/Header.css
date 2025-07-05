@@ -1,16 +1,29 @@
 .header {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.4); /* شفافية عشان يبان اللي ورا */
+  backdrop-filter: blur(10px); /* البلور */
+  -webkit-backdrop-filter: blur(10px); /* للـ Safari */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* خط بسيط */
+  z-index: 1000; /* عشان يفضل فوق كل حاجه */
 }
 
-.header a, .header button {
-  margin: 0 10px;
+.header a,
+.header button {
+  margin: 0 12px;
   text-decoration: none;
   background: none;
   border: none;
   color: #333;
   font-weight: bold;
-  cursor: pointer;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.header a:hover,
+.header button:hover {
+  color: #e65b8f; /* لون البصمة الروز 😍 */
 }

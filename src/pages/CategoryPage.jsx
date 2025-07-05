@@ -1,45 +1,81 @@
+// src/pages/CategoryPage.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 import "./CategoryPage.css";
-import Navbar from "../components/Navbar";
+
+const categories = [
+  { name: "Rings", color: "#f6c1c1" },
+  { name: "Earrings", color: "#dcd1ff" },
+  { name: "Clay", color: "#ffe8cc" },
+  { name: "Necklaces", color: "#c7f9cc" },
+  { name: "Bracelets", color: "#ffd6e0" },
+  { name: "Customize Your Order", color: "#fbe7ff" },
+];
 
 const CategoryPage = () => {
-  const products = [
-    { name: "T-shirt Oversized", image: "/images/product1.JPG" },
-    { name: "Denim Jacket", image: "/images/product2.JPG" },
-    { name: "Cargo Pants", image: "/images/product3.JPG" },
-    { name: "Hoodie", image: "/images/product4.JPG" },
-    { name: "Basic Tee", image: "/images/product5.JPG" },
-    { name: "Maxi Skirt", image: "/images/product6.JPG" },
-  ];
-
   return (
-    <>
-    <Navbar/>
-    <div className="category-page">
-      <h2 className="title mb-5">Shop All Products 🛍</h2>
-      <div className="container">
-        <div className="row">
-          {products.map((product, index) => (
-            <div className="col-md-4 mb-4" key={index}>
-              <div className="product-card">
-                <Link to={`/product/${index}`} className="product-link">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="product-img img-fluid"
-                  />
-                  <p className="product-name">{product.name}</p>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
+    <div
+      className="category-container"
+      style={{
+        minHeight: "100vh",
+        backgroundImage: "url('/images/background.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        padding: "60px 20px",
+        fontFamily: "'Segoe UI', sans-serif",
+      }}
+    >
+      <h2
+        style={{
+          textAlign: "center",
+          fontSize: "32px",
+          marginBottom: "40px",
+          color: "#AC0000",
+        }}
+      >
+        Explore Our Categories
+      </h2>
+
+      <div
+        className="categories-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+          gap: "20px",
+          maxWidth: "1000px",
+          margin: "auto",
+        }}
+      >
+        {categories.map((cat, index) => (
+          <Link
+            key={index}
+            to={'/category/${cat.name.toLowerCase().replace(/\s/g, "-")}'}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "160px",
+              borderRadius: "18px",
+              backgroundColor: cat.color,
+              textDecoration: "none",
+              color: "#333",
+              fontWeight: "bold",
+              fontSize: "18px",
+              textAlign: "center",
+              padding: "10px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              transition: "transform 0.3s",
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            {cat.name}
+          </Link>
+        ))}
       </div>
     </div>
-  </>
   );
 };
-
 
 export default CategoryPage;
